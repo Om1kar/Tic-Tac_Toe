@@ -59,14 +59,14 @@ public class TicTacToeGame {
             board[position] = playerLetter;
             toDisplayBoard();
             checkFreeSpace();
+            decideWinner();
             toMakeAMove();
+
         } else if (board[position] != ' ') {
             System.err.println("You already choose");
             toMakeAMove();
         } else {
             System.err.println("Enter location between 1 to 9");
-            toDisplayBoard();
-            checkFreeSpace();
             toMakeAMove();
         }
     }
@@ -75,45 +75,53 @@ public class TicTacToeGame {
         /*
         UC6->Using math.random function to decide who plays first
          */
-        int Toss = (int) Math.floor(Math.random() * 10) % 2+1;
+        int Toss = (int) Math.floor(Math.random() * 10) % 2 + 1;
         switch (Toss) {
             case 1:
                 System.out.println("You Won the Toss Play First");
-                createBoard();
-                chooseLetter();
-                toDisplayBoard();
-                checkFreeSpace();
-                toMakeAMove();
                 break;
             default:
                 System.out.println("Opponent Won The Toss");
-                createBoard();
-                chooseLetter();
-                toDisplayBoard();
-                checkFreeSpace();
-                toMakeAMove();
         }
     }
-    public static void checkFreeSpace(){
+
+    public static void checkFreeSpace() {
+        /*
+        UC5->Check for free space in game board
+         */
         boolean spaceAvailable = false;
         int freeSpace = 0;
-        for(int i=1;i<board.length;i++)
-        {
-            if((board[i] == ' '))
-            {
+        for (int i = 1; i < board.length; i++) {
+            if ((board[i] == ' ')) {
                 spaceAvailable = true;
                 freeSpace++;
             }
         }
-        if(spaceAvailable)
-        {
-            System.err.println("Board is full \n make another move");
+        if (spaceAvailable == false) {
+            System.err.println("Board is full");
+            System.exit(0);
+        } else {
+            System.out.println("You have " + freeSpace + " moves left");
+        }
+    }
+
+    public static void decideWinner() {
+        /*
+       UC7-> checking letter filled horizontally and vertically in game board
+         */
+            if ((board[1] == playerLetter && board[2] == playerLetter && board[3] == playerLetter) ||
+                (board[4] == playerLetter && board[5] == playerLetter && board[6] == playerLetter) ||
+                (board[7] == playerLetter && board[8] == playerLetter && board[9] == playerLetter) ||
+                (board[1] == playerLetter && board[5] == playerLetter && board[9] == playerLetter) ||
+                (board[3] == playerLetter && board[5] == playerLetter && board[7] == playerLetter) ||
+                (board[1] == playerLetter && board[4] == playerLetter && board[7] == playerLetter) ||
+                (board[2] == playerLetter && board[5] == playerLetter && board[7] == playerLetter) ||
+                (board[3] == playerLetter && board[6] == playerLetter && board[9] == playerLetter)) {
+            toDisplayBoard();
+            System.out.println("YOU WON THE GAME");
             System.exit(0);
         }
-        else
-        {
-            System.out.println("You have "+ freeSpace + "= moves left");
-        }
+
     }
     public static void main(String[] args) {
         System.out.println("-----Welcome To Tic-Tac-Toe Game-----");
@@ -125,8 +133,6 @@ public class TicTacToeGame {
         createBoard();
         chooseLetter();
         toDisplayBoard();
-        checkFreeSpace();
         toMakeAMove();
-
     }
 }
