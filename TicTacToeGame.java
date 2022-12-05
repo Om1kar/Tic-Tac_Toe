@@ -21,6 +21,7 @@ public class TicTacToeGame {
             board[i] = ' ';
         }
     }
+
     public static void chooseLetter() {
         /*
         UC2->allow player to choose a letter
@@ -34,6 +35,7 @@ public class TicTacToeGame {
             System.out.println(computerLetter == 'O');
         }
     }
+
     public static void toDisplayBoard() {
         /*
         UC3-> To print the board having 9 indexes
@@ -44,13 +46,14 @@ public class TicTacToeGame {
         System.out.println("----------");
         System.out.println(board[7] + " | " + board[8] + " | " + board[9]);
     }
+
     public static void toMakeAMove() {
         /*
         UC4->To make A move
         used if else condition
         */
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Choose your location 1 - 9 ");
+        System.out.println("Choose your number between 1 to 9 ");
         int position = scanner.nextInt();
         if (position <= 9 && position >= 1) {
             board[position] = playerLetter;
@@ -61,7 +64,31 @@ public class TicTacToeGame {
             toMakeAMove();
         } else {
             System.err.println("Enter location between 1 to 9");
+            toDisplayBoard();
             toMakeAMove();
+
+        }
+    }
+
+    public static void Toss() {
+        /*
+        UC6->Using math.random function to decide who plays first
+         */
+        int Toss = (int) Math.floor(Math.random() * 10) % 2+1;
+        switch (Toss) {
+            case 1:
+                System.out.println("You Won the Toss Play First");
+                createBoard();
+                chooseLetter();
+                toDisplayBoard();
+                toMakeAMove();
+                break;
+            default:
+                System.out.println("Opponent Won The Toss");
+                createBoard();
+                chooseLetter();
+                toDisplayBoard();
+                toMakeAMove();
         }
     }
     public static void main(String[] args) {
@@ -69,6 +96,8 @@ public class TicTacToeGame {
         /*
         Static Method Calling----
          */
+        System.out.println("Toss a Coin-------");
+        Toss();
         createBoard();
         chooseLetter();
         toDisplayBoard();
