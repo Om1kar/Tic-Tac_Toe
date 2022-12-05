@@ -58,6 +58,7 @@ public class TicTacToeGame {
         if (position <= 9 && position >= 1) {
             board[position] = playerLetter;
             toDisplayBoard();
+            checkFreeSpace();
             toMakeAMove();
         } else if (board[position] != ' ') {
             System.err.println("You already choose");
@@ -65,8 +66,8 @@ public class TicTacToeGame {
         } else {
             System.err.println("Enter location between 1 to 9");
             toDisplayBoard();
+            checkFreeSpace();
             toMakeAMove();
-
         }
     }
 
@@ -81,6 +82,7 @@ public class TicTacToeGame {
                 createBoard();
                 chooseLetter();
                 toDisplayBoard();
+                checkFreeSpace();
                 toMakeAMove();
                 break;
             default:
@@ -88,7 +90,29 @@ public class TicTacToeGame {
                 createBoard();
                 chooseLetter();
                 toDisplayBoard();
+                checkFreeSpace();
                 toMakeAMove();
+        }
+    }
+    public static void checkFreeSpace(){
+        boolean spaceAvailable = false;
+        int freeSpace = 0;
+        for(int i=1;i<board.length;i++)
+        {
+            if((board[i] == ' '))
+            {
+                spaceAvailable = true;
+                freeSpace++;
+            }
+        }
+        if(spaceAvailable)
+        {
+            System.err.println("Board is full \n make another move");
+            System.exit(0);
+        }
+        else
+        {
+            System.out.println("You have "+ freeSpace + "= moves left");
         }
     }
     public static void main(String[] args) {
@@ -101,6 +125,8 @@ public class TicTacToeGame {
         createBoard();
         chooseLetter();
         toDisplayBoard();
+        checkFreeSpace();
         toMakeAMove();
+
     }
 }
