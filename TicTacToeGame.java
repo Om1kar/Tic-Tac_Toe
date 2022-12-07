@@ -30,12 +30,16 @@ public class TicTacToeGame {
         Scanner scanner = new Scanner(System.in);
         playerLetter = scanner.next().toUpperCase().charAt(0);
         if (playerLetter == 'X') {
-            System.out.println(playerLetter);
-        } else {
-            System.out.println(computerLetter == 'O');
+            computerLetter='O';
+            System.out.println("You've selected =" + playerLetter);
+            System.out.println("opponent Selected ="+computerLetter);
+        } else{
+            computerLetter= 'O';
+            playerLetter ='X';
+           System.out.println("You've selected =" + playerLetter);
+            System.out.println("Opponent Selected =" + computerLetter);
         }
     }
-
     public static void toDisplayBoard() {
         /*
         UC3-> To print the board having 9 indexes
@@ -46,7 +50,6 @@ public class TicTacToeGame {
         System.out.println("----------");
         System.out.println(board[7] + " | " + board[8] + " | " + board[9]);
     }
-
     public static void toMakeAMove() {
         /*
         UC4->To make A move
@@ -70,21 +73,6 @@ public class TicTacToeGame {
             toMakeAMove();
         }
     }
-
-    public static void Toss() {
-        /*
-        UC6->Using math.random function to decide who plays first
-         */
-        int Toss = (int) Math.floor(Math.random() * 10) % 2 + 1;
-        switch (Toss) {
-            case 1:
-                System.out.println("You Won the Toss Play First");
-                break;
-            default:
-                System.out.println("Opponent Won The Toss");
-        }
-    }
-
     public static void checkFreeSpace() {
         /*
         UC5->Check for free space in game board
@@ -101,7 +89,20 @@ public class TicTacToeGame {
             System.err.println("Board is full");
             System.exit(0);
         } else {
-            System.out.println("You have " + freeSpace + " moves left");
+            System.out.println("You have " + freeSpace + " moves left To Play");
+        }
+    }
+    public static void Toss() {
+        /*
+        UC6->Using math.random function to decide who plays first
+         */
+        int Toss = (int) Math.floor(Math.random() * 10) % 2 + 1;
+        switch (Toss) {
+            case 1:
+                System.out.println("You Won the Toss Play First");
+                break;
+            default:
+                System.out.println("Opponent Won The Toss");
         }
     }
 
@@ -109,30 +110,78 @@ public class TicTacToeGame {
         /*
        UC7-> checking letter filled horizontally and vertically in game board
          */
-            if ((board[1] == playerLetter && board[2] == playerLetter && board[3] == playerLetter) ||
+         if     ((board[1] == playerLetter && board[2] == playerLetter && board[3] == playerLetter) ||
                 (board[4] == playerLetter && board[5] == playerLetter && board[6] == playerLetter) ||
                 (board[7] == playerLetter && board[8] == playerLetter && board[9] == playerLetter) ||
                 (board[1] == playerLetter && board[5] == playerLetter && board[9] == playerLetter) ||
                 (board[3] == playerLetter && board[5] == playerLetter && board[7] == playerLetter) ||
                 (board[1] == playerLetter && board[4] == playerLetter && board[7] == playerLetter) ||
-                (board[2] == playerLetter && board[5] == playerLetter && board[7] == playerLetter) ||
-                (board[3] == playerLetter && board[6] == playerLetter && board[9] == playerLetter)) {
+                (board[2] == playerLetter && board[5] == playerLetter && board[8] == playerLetter)||
+                 (board[3] == playerLetter && board[6] == playerLetter && board[9] == playerLetter)) {
             toDisplayBoard();
             System.out.println("YOU WON THE GAME");
             System.exit(0);
-        }
-
+         } else if(((board[1] == computerLetter && board[2] == computerLetter && board[3] == computerLetter) ||
+                 (board[4] == computerLetter && board[5] == computerLetter && board[6] == computerLetter) ||
+                 (board[7] == computerLetter && board[8] == computerLetter && board[9] == computerLetter) ||
+                 (board[1] == computerLetter && board[5] == computerLetter && board[9] == computerLetter) ||
+                 (board[3] == computerLetter && board[5] == computerLetter && board[7] == computerLetter) ||
+                 (board[1] ==computerLetter && board[4] == computerLetter && board[7] == computerLetter) ||
+                 (board[2] == computerLetter && board[5] == computerLetter && board[8] == computerLetter)||
+                 (board[3] == computerLetter && board[6] == computerLetter && board[9] == computerLetter))) {
+             toDisplayBoard();
+             System.out.println("YOU LOST THE GAME\nOPPONENT WON THE GAME");
+             System.exit(0);
+         } else if (board[1] != ' ' && board[2] != ' ' && board[3] != ' '
+                    && board[4] != ' ' && board[5] != ' ' && board[6] != ' '
+                    && board[7]!=' '&& board[8]!=' '&& board[9]!=' ') {
+             System.out.println("MATCH IS DRAW PLAY AGAIN");
+             System.exit(0);
+         }
     }
+
+    public static void playerMove() {
+        int playerMove;
+        while (true) {
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Enter No between[1 to 9] To Move Letter in Empty Box");
+            playerMove = scanner.nextInt();
+            if (board[playerMove] == ' ') {
+                break;
+            }
+        }
+        System.out.println("Player choose = " + playerMove);
+        board[playerMove] = playerLetter;
+    }
+
+    public static void computerMove() {
+        int computerMove;
+        while (true) {
+            computerMove = (int) Math.floor(Math.random() * 10) % 9 + 1;
+            if (board[computerMove] == ' ') {
+                break;
+            }
+        }
+        System.out.println("Computer choose = " + computerMove);
+        board[computerMove] = computerLetter;
+    }
+
     public static void main(String[] args) {
         System.out.println("-----Welcome To Tic-Tac-Toe Game-----");
         /*
         Static Method Calling----
          */
-        System.out.println("Toss a Coin-------");
+        System.out.println("--------Toss a Coin To Begin Game-------");
         Toss();
         createBoard();
-        chooseLetter();
         toDisplayBoard();
-        toMakeAMove();
+        chooseLetter();
+        while (true) {
+            playerMove();
+            computerMove();
+            toDisplayBoard();
+            checkFreeSpace();
+            decideWinner();
+        }
     }
 }
